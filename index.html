@@ -70,6 +70,8 @@
   </div>
 
   <script>
+    let correctOtp;
+
     function generateOTP() {
       return Math.floor(1000 + Math.random() * 9000); 
     }
@@ -77,17 +79,22 @@
     
     function sendOTP() {
       const phoneNumber = document.getElementById('phoneNumber').value;
-      const otp = generateOTP();
-      console.log(`OTP sent to ${phoneNumber}: ${otp}`);
+      correctOtp = generateOTP();
+      console.log(`OTP sent to ${phoneNumber}: ${correctOtp}`);
     }
+
     document.getElementById('registrationForm').addEventListener('submit', function(event) {
       event.preventDefault(); 
       const fullName = document.getElementById('fullName').value;
       const email = document.getElementById('email').value;
       const phoneNumber = document.getElementById('phoneNumber').value;
-      const otp = document.getElementById('otp').value;
-      if (fullName && email && phoneNumber && otp) {
-        alert('Registration successful!');
+      const userOtp = document.getElementById('otp').value;
+      if (fullName && email && phoneNumber && userOtp) {
+        if (userOtp == correctOtp.toString()) {
+          alert('Registration successful!');
+        } else {
+          alert('Incorrect OTP. Please try again.');
+        }
       } else {
         alert('Please fill in all fields.');
       }
